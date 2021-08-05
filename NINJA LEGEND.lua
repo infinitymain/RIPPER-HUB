@@ -34,6 +34,30 @@ while _G.Farm do wait()
     end
 end)
 
+tgls:Button("Buy sword", function()
+local args = {
+    [1] = "buyAllSwords",
+    [2] = "Inner Peace Island"
+}
+
+game:GetService("Players").LocalPlayer.ninjaEvent:FireServer(unpack(args))
+
+    
+end)
+
+tgls:Seperator()
+
+tgls:Button("Buy Belts", function()
+local args = {
+    [1] = "buyAllBelts",
+    [2] = "Inner Peace Island"
+}
+
+game:GetService("Players").LocalPlayer.ninjaEvent:FireServer(unpack(args))
+
+    
+end)
+
 local btns = serv:Channel("Teleport")
 
 btns:Button("island 1", function()
