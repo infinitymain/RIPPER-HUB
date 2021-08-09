@@ -261,9 +261,9 @@ end
 
 local DiscordLib = loadstring(game:HttpGet"https://raw.githubusercontent.com/dawid-scripts/UI-Libs/main/discord%20lib.txt")()
 
-local win = DiscordLib:Window("BLOX FRUIT  |  SHARK X HUB")
+local win = DiscordLib:Window("RIPPER HUB")
 
-local serv = win:Server("   -==[    MAIN   ]==-", "http://www.roblox.com/asset/?id=6832603095")
+local serv = win:Server("Blox Fruit", "http://www.roblox.com/asset/?id=6832603095")
 
 
 
