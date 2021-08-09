@@ -1,0 +1,459 @@
+
+--2753915549 --OLD WORLD
+--4442272183 --NEW WORLD
+_G.FARM = false 
+_G.TOOLUP = ""
+_G.WEAPONUO = "None"
+_G.AUTOEQUIP = false
+_G.QUEST = 1
+_G.FARMMODE = {
+    x = 0,
+    y = 15,
+    z = 0
+    
+}
+
+
+
+
+local vu = game:GetService("VirtualUser")
+game:GetService("Players").LocalPlayer.Idled:connect(function()
+   vu:Button2Down(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+   wait(1)
+   vu:Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+end)
+
+
+
+
+
+
+
+
+
+
+function quest() -- QUESTTTTTTTTTTTTTTTT
+    
+    if game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == true then
+        
+    else
+    
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = _G.QUESTMON
+wait(2)
+local args = {
+    [1] = "StartQuest",
+    [2] = _G.NAMEQUEST,
+    [3] = _G.QUESTNUM
+}
+
+game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
+
+
+end
+end
+
+
+
+
+
+
+
+
+
+
+function attack() -- ATACKKKKKKKKKKKKKK
+game:GetService'VirtualUser':CaptureController()
+game:GetService'VirtualUser':Button1Down(Vector2.new(1280, 672))
+end
+
+
+function tpmonq() -- TPMONQUESTTTTTTTTTTTTTTTTT
+    local mon = game:GetService("Workspace").Enemies:GetChildren()
+    for i,v in pairs(mon) do
+        if v.Humanoid.Health == 0 or game.Players.LocalPlayer.Character.Humanoid.Health == 0 then 
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = _G.PUK
+        elseif v.Name == _G.Mon then
+            game.Players.LocalPlayer.Character.Humanoid:ChangeState(11)
+            v.HumanoidRootPart.Size = Vector3.new(40,40,40)
+            if _G.HIDEHB then
+                v.HumanoidRootPart.Transparency = 1
+            else
+                v.HumanoidRootPart.Transparency = 0.9
+            end
+            
+            
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame * CFrame.new(_G.FARMMODE.x, _G.FARMMODE.y ,_G.FARMMODE.z)
+
+    end
+    end
+    
+    end
+
+
+
+
+
+
+
+
+--------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+local MYLEVEL = game:GetService("Players").LocalPlayer.Data.Level.Value
+
+
+if MYLEVEL == 1 or MYLEVEL <= 9 then
+    _G.Mon = "Bandit [Lv. 5]"
+    _G.NAMEQUEST = "BanditQuest1"
+    _G.QUESTNUM = 1
+    _G.QUESTTEXT = "Reward:\n$350\n250 Exp."
+    _G.QUESTMON = CFrame.new(1061.7947998047,16.516616821289,1543.3637695313)
+    _G.PUK = CFrame.new(1094.74158, 68.1195679, 1617.98132, -0.805238843, 2.58748241e-06, -0.592950821, 6.83637325e-07, 1, 3.43534839e-06, 0.592950821, 2.36091159e-06, -0.805238843)
+elseif MYLEVEL == 10 or MYLEVEL <= 14 then
+     _G.Mon = "Monkey [Lv. 14]"
+    _G.NAMEQUEST = "JungleQuest"
+    _G.QUESTNUM = 1
+    _G.QUESTTEXT = "Reward:\n$800\n1,800 Exp."
+    _G.QUESTMON = CFrame.new(-1600.24353, 36.8521347, 153.224792, 0.0664860159, 1.09421023e-07, -0.997787356, 9.55680779e-09, 1, 1.10300476e-07, 0.997787356, -1.68691017e-08, 0.0664860159)
+    _G.PUK = CFrame.new(-1287.45483, 18.6214275, -343.596924, 0.767107546, 1.47207633e-08, -0.641518533, 2.95264506e-08, 1, 5.82535442e-08, 0.641518533, -6.3628498e-08, 0.767107546)
+    elseif MYLEVEL == 15 or MYLEVEL <= 29 then
+     _G.Mon = "Gorilla [Lv. 20]"
+    _G.NAMEQUEST = "JungleQuest"
+    _G.QUESTNUM = 2
+    _G.QUESTTEXT = "Reward:\n$1,200\n3,500 Exp."
+    _G.QUESTMON = CFrame.new(-1600.24353, 36.8521347, 153.224792, 0.0664860159, 1.09421023e-07, -0.997787356, 9.55680779e-09, 1, 1.10300476e-07, 0.997787356, -1.68691017e-08, 0.0664860159)
+    _G.PUK = CFrame.new(-1603.18396, 36.8521347, 153.74736, -0.110455692, 4.59471678e-08, -0.993881047, -8.04396905e-09, 1, 4.71240185e-08, 0.993881047, 1.31998643e-08, -0.110455692)
+elseif MYLEVEL == 30 or MYLEVEL <= 39 then
+     _G.Mon = "Pirate [Lv. 35]"
+    _G.NAMEQUEST = "BuggyQuest1"
+    _G.QUESTNUM = 1
+    _G.QUESTTEXT = "Reward:\n$3,000\n10,000 Exp."
+    _G.QUESTMON = CFrame.new(-1139.56116, 4.75204945, 3825.97827, -0.947666645, 2.60038924e-08, 0.319261551, 3.65571005e-08, 1, 2.70626153e-08, -0.319261551, 3.73176157e-08, -0.947666645)
+    _G.PUK = CFrame.new(-1223.64111, 4.75204945, 3914.84668, -0.99005419, 5.39223821e-09, 0.140686572, -6.35229591e-10, 1, -4.27983267e-08, -0.140686572, -4.24620303e-08, -0.99005419)
+    elseif MYLEVEL == 40 or MYLEVEL <= 59 then
+     _G.Mon = "Brute [Lv. 45]"
+    _G.NAMEQUEST = "BuggyQuest1"
+    _G.QUESTNUM = 2
+    _G.QUESTTEXT = "Reward:\n$3,500\n18,000 Exp."
+    _G.QUESTMON = CFrame.new(-1139.56116, 4.75204945, 3825.97827, -0.947666645, 2.60038924e-08, 0.319261551, 3.65571005e-08, 1, 2.70626153e-08, -0.319261551, 3.73176157e-08, -0.947666645)
+    _G.PUK = CFrame.new(-1140.92944, 14.8098745, 4317.16455, -0.943479657, 3.71900555e-08, -0.331430465, 1.7316566e-08, 1, 6.2915845e-08, 0.331430465, 5.36205853e-08, -0.943479657)
+    elseif MYLEVEL == 60 or MYLEVEL <= 74 then
+     _G.Mon = "Desert Bandit [Lv. 60]"
+    _G.NAMEQUEST = "DesertQuest"
+    _G.QUESTNUM = 1
+    _G.QUESTTEXT = "Reward:\n$4,000\n35,000 Exp."
+    _G.QUESTMON = CFrame.new(896.408142, 6.43846178, 4389.37891, -0.846945703, -2.31297754e-08, 0.531679392, -1.55507234e-08, 1, 1.87315088e-08, -0.531679392, 7.59657048e-09, -0.846945703)
+    _G.PUK = CFrame.new(949.532593, 15.2893953, 4403.09912, -0.832314849, -4.19622452e-08, 0.55430311, 7.94023236e-10, 1, 7.68949704e-08, -0.55430311, 6.44409539e-08, -0.832314849)
+    elseif MYLEVEL == 75 or MYLEVEL <= 89 then
+     _G.Mon = "Desert Officer [Lv. 70]"
+    _G.NAMEQUEST = "DesertQuest"
+    _G.QUESTNUM = 2
+    _G.QUESTTEXT = "Reward:\n$4,500\n50,000 Exp."
+    _G.QUESTMON = CFrame.new(896.408142, 6.43846178, 4389.37891, -0.846945703, -2.31297754e-08, 0.531679392, -1.55507234e-08, 1, 1.87315088e-08, -0.531679392, 7.59657048e-09, -0.846945703)
+    _G.PUK = CFrame.new(1547.40369, 14.4520388, 4359.40625, 0.228631318, -1.20783e-07, -0.973513126, -3.43095508e-08, 1, -1.32126871e-07, 0.973513126, 6.36091286e-08, 0.228631318)
+    elseif MYLEVEL == 90 or MYLEVEL <= 99 then
+     _G.Mon = "Snow Bandit [Lv. 90]"
+    _G.NAMEQUEST = "SnowQuest"
+    _G.QUESTNUM = 1
+    _G.QUESTTEXT = "Reward:\n$5,000\n70,000 Exp."
+    _G.QUESTMON = CFrame.new(1384.01538, 87.272789, -1296.28137, 0.462413222, -7.79864777e-08, -0.88666451, -1.42050363e-08, 1, -9.53630916e-08, 0.88666451, 5.6692258e-08, 0.462413222)
+    _G.PUK = CFrame.new(1372.84326, 105.990303, -1422.19507, 0.719091773, -2.12436309e-08, 0.694915235, 9.82151036e-08, 1, -7.10619616e-08, -0.694915235, 1.19351228e-07, 0.719091773)
+    elseif MYLEVEL == 100 or MYLEVEL <= 119 then
+     _G.Mon = "Snowman [Lv. 100]"
+    _G.NAMEQUEST = "SnowQuest"
+    _G.QUESTNUM = 2
+    _G.QUESTTEXT = "Reward:\n$5,500\n120,000 Exp."
+    _G.QUESTMON = CFrame.new(1384.01538, 87.272789, -1296.28137, 0.462413222, -7.79864777e-08, -0.88666451, -1.42050363e-08, 1, -9.53630916e-08, 0.88666451, 5.6692258e-08, 0.462413222)
+    _G.PUK = CFrame.new(1220.92712, 138.011871, -1489.01208, 0.389352709, -7.53626693e-07, 0.921088696, 1.45705499e-07, 1, 7.56600116e-07, -0.921088696, -1.60376572e-07, 0.389352709)
+    elseif MYLEVEL == 120 or MYLEVEL <= 149 then
+     _G.Mon = "Chief Petty Officer [Lv. 120]"
+    _G.NAMEQUEST = "MarineQuest2"
+    _G.QUESTNUM = 1
+    _G.QUESTTEXT = "Reward:\n$6,000\n180,000 Exp."
+    _G.QUESTMON = CFrame.new(-5034.64893, 28.6520348, 4324.53369, -0.0616381466, 5.83357576e-08, 0.998098552, -1.59750098e-08, 1, -5.9433436e-08, -0.998098552, -1.96080023e-08, -0.0616381466)
+    _G.PUK = CFrame.new(-4863.61328, 22.6520348, 4306.39307, 0.536051273, 7.00434066e-09, -0.844185412, -5.8011751e-10, 1, 7.92878918e-09, 0.844185412, -3.76051057e-09, 0.536051273)
+elseif MYLEVEL == 150 or MYLEVEL <= 174 then
+     _G.Mon = "Sky Bandit [Lv. 150]"
+    _G.NAMEQUEST = "SkyQuest"
+    _G.QUESTNUM = 1
+    _G.QUESTTEXT = "Reward:\n$7,000\n250,000 Exp."
+    _G.QUESTMON = CFrame.new(-4843.2041, 717.669617, -2623.13159, -0.775086224, -1.6359829e-08, -0.631855488, -4.10942462e-08, 1, 2.45178793e-08, 0.631855488, 4.49690951e-08, -0.775086224)
+    _G.PUK = CFrame.new(-4970.74219, 294.544342, -2890.11353, -0.994874597, -8.61311165e-08, -0.101116329, -9.10836278e-08, 1, 4.43614923e-08, 0.101116329, 5.33441664e-08, -0.994874597)
+    elseif MYLEVEL == 175 or MYLEVEL <= 224 then
+     _G.Mon = "Dark Master [Lv. 175]"
+    _G.NAMEQUEST = "SkyQuest"
+    _G.QUESTNUM = 2
+    _G.QUESTTEXT = "Reward:\n$7,500\n350,000 Exp."
+    _G.QUESTMON = CFrame.new(-4843.2041, 717.669617, -2623.13159, -0.775086224, -1.6359829e-08, -0.631855488, -4.10942462e-08, 1, 2.45178793e-08, 0.631855488, 4.49690951e-08, -0.775086224)
+    _G.PUK = CFrame.new(-5239.94629, 392.217102, -2208.18335, 0.969297886, -5.95604988e-09, -0.245889395, 3.87897714e-09, 1, -8.93151775e-09, 0.245889395, 7.70350184e-09, 0.969297886)
+     elseif MYLEVEL == 225 or MYLEVEL <= 275 then
+     _G.Mon = "Toga Warrior [Lv. 225]"
+    _G.NAMEQUEST = "ColosseumQuest"
+    _G.QUESTNUM = 1
+    _G.QUESTTEXT = "Reward:\n$7,000\n700,000 Exp."
+    _G.QUESTMON = CFrame.new(-1575.72961, 7.38933659, -2983.39453, 0.52762109, -1.48187587e-06, 0.849479854, 2.69328297e-07, 1, 1.57716818e-06, -0.849479854, -6.0335816e-07, 0.52762109)
+    _G.PUK = CFrame.new(-1819.12415, 7.28907108, -2744.02539, 0.547199547, 2.10840998e-08, -0.837002158, -1.27399286e-10, 1, 2.51067309e-08, 0.837002158, -1.36317579e-08, 0.547199547)
+    elseif MYLEVEL == 275 or MYLEVEL <= 299 then
+     _G.Mon = "Gladiator [Lv. 275]"
+    _G.NAMEQUEST = "ColosseumQuest"
+    _G.QUESTNUM = 2
+    _G.QUESTTEXT = "Reward:\n$7,500\n1,000,000 Exp."
+    _G.QUESTMON = CFrame.new(-1575.72961, 7.38933659, -2983.39453, 0.52762109, -1.48187587e-06, 0.849479854, 2.69328297e-07, 1, 1.57716818e-06, -0.849479854, -6.0335816e-07, 0.52762109)
+    _G.PUK = CFrame.new(-1334.76514, 7.44254398, -3228.90552, -0.340173125, 2.8230156e-08, 0.940362811, 2.60959143e-09, 1, -2.90764834e-08, -0.940362811, -7.4370754e-09, -0.340173125)
+    elseif MYLEVEL == 300 or MYLEVEL <= 329 then
+     _G.Mon = "Military Soldier [Lv. 300]"
+    _G.NAMEQUEST = "MagmaQuest"
+    _G.QUESTNUM = 1
+    _G.QUESTTEXT = "Reward:\n$8,250\n1,300,000 Exp."
+    _G.QUESTMON = CFrame.new(-5316.33887, 12.236989, 8517.67285, 0.499506682, -5.08374072e-08, -0.86631006, -1.30872131e-08, 1, -6.62286652e-08, 0.86631006, 4.44192452e-08, 0.499506682)
+    _G.PUK = CFrame.new(-5419.0752, 10.9255161, 8464.50488, -0.637788415, -4.55103836e-05, 0.770211577, 7.05542743e-06, 1, 6.49305366e-05, -0.770211577, 4.68461185e-05, -0.637788415)
+
+end
+
+
+
+
+
+
+
+
+
+
+
+--------------------------------------------------------------------------------------------------
+
+
+
+
+function abadonquest()
+if game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestReward.Title.Text == _G.QUESTTEXT then
+    --lol
+    else
+local args = {
+    [1] = "AbandonQuest"
+}
+
+game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
+
+end
+end
+
+
+
+
+
+--------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+local DiscordLib = loadstring(game:HttpGet"https://raw.githubusercontent.com/dawid-scripts/UI-Libs/main/discord%20lib.txt")()
+
+local win = DiscordLib:Window("BLOX FRUIT  |  SHARK X HUB")
+
+local serv = win:Server("   -==[    MAIN   ]==-", "http://www.roblox.com/asset/?id=6832603095")
+
+
+
+local tgls = serv:Channel("Autofarm")
+local stats = serv:Channel("Auto stats")
+
+tgls:Seperator()
+tgls:Label("                   -==[  FUNCTION  :  AUTOFARM   ]==-")
+tgls:Seperator()
+
+
+tgls:Toggle("Auto-Farm",false, function(v)
+_G.FARM = v
+
+
+
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = _G.QUESTMON
+while _G.FARM do wait()
+    local MYLEVEL = game:GetService("Players").LocalPlayer.Data.Level.Value
+
+
+
+local MYLEVEL = game:GetService("Players").LocalPlayer.Data.Level.Value
+
+
+if MYLEVEL == 1 or MYLEVEL <= 9 then
+    _G.Mon = "Bandit [Lv. 5]"
+    _G.NAMEQUEST = "BanditQuest1"
+    _G.QUESTNUM = 1
+    _G.QUESTTEXT = "Reward:\n$350\n250 Exp."
+    _G.QUESTMON = CFrame.new(1061.7947998047,16.516616821289,1543.3637695313)
+    _G.PUK = CFrame.new(1094.74158, 68.1195679, 1617.98132, -0.805238843, 2.58748241e-06, -0.592950821, 6.83637325e-07, 1, 3.43534839e-06, 0.592950821, 2.36091159e-06, -0.805238843)
+elseif MYLEVEL == 10 or MYLEVEL <= 14 then
+     _G.Mon = "Monkey [Lv. 14]"
+    _G.NAMEQUEST = "JungleQuest"
+    _G.QUESTNUM = 1
+    _G.QUESTTEXT = "Reward:\n$800\n1,800 Exp."
+    _G.QUESTMON = CFrame.new(-1600.24353, 36.8521347, 153.224792, 0.0664860159, 1.09421023e-07, -0.997787356, 9.55680779e-09, 1, 1.10300476e-07, 0.997787356, -1.68691017e-08, 0.0664860159)
+    _G.PUK = CFrame.new(-1287.45483, 18.6214275, -343.596924, 0.767107546, 1.47207633e-08, -0.641518533, 2.95264506e-08, 1, 5.82535442e-08, 0.641518533, -6.3628498e-08, 0.767107546)
+    elseif MYLEVEL == 15 or MYLEVEL <= 29 then
+     _G.Mon = "Gorilla [Lv. 20]"
+    _G.NAMEQUEST = "JungleQuest"
+    _G.QUESTNUM = 2
+    _G.QUESTTEXT = "Reward:\n$1,200\n3,500 Exp."
+    _G.QUESTMON = CFrame.new(-1600.24353, 36.8521347, 153.224792, 0.0664860159, 1.09421023e-07, -0.997787356, 9.55680779e-09, 1, 1.10300476e-07, 0.997787356, -1.68691017e-08, 0.0664860159)
+    _G.PUK = CFrame.new(-1603.18396, 36.8521347, 153.74736, -0.110455692, 4.59471678e-08, -0.993881047, -8.04396905e-09, 1, 4.71240185e-08, 0.993881047, 1.31998643e-08, -0.110455692)
+elseif MYLEVEL == 30 or MYLEVEL <= 39 then
+     _G.Mon = "Pirate [Lv. 35]"
+    _G.NAMEQUEST = "BuggyQuest1"
+    _G.QUESTNUM = 1
+    _G.QUESTTEXT = "Reward:\n$3,000\n10,000 Exp."
+    _G.QUESTMON = CFrame.new(-1139.56116, 4.75204945, 3825.97827, -0.947666645, 2.60038924e-08, 0.319261551, 3.65571005e-08, 1, 2.70626153e-08, -0.319261551, 3.73176157e-08, -0.947666645)
+    _G.PUK = CFrame.new(-1223.64111, 4.75204945, 3914.84668, -0.99005419, 5.39223821e-09, 0.140686572, -6.35229591e-10, 1, -4.27983267e-08, -0.140686572, -4.24620303e-08, -0.99005419)
+    elseif MYLEVEL == 40 or MYLEVEL <= 59 then
+     _G.Mon = "Brute [Lv. 45]"
+    _G.NAMEQUEST = "BuggyQuest1"
+    _G.QUESTNUM = 2
+    _G.QUESTTEXT = "Reward:\n$3,500\n18,000 Exp."
+    _G.QUESTMON = CFrame.new(-1139.56116, 4.75204945, 3825.97827, -0.947666645, 2.60038924e-08, 0.319261551, 3.65571005e-08, 1, 2.70626153e-08, -0.319261551, 3.73176157e-08, -0.947666645)
+    _G.PUK = CFrame.new(-1140.92944, 14.8098745, 4317.16455, -0.943479657, 3.71900555e-08, -0.331430465, 1.7316566e-08, 1, 6.2915845e-08, 0.331430465, 5.36205853e-08, -0.943479657)
+    elseif MYLEVEL == 60 or MYLEVEL <= 74 then
+     _G.Mon = "Desert Bandit [Lv. 60]"
+    _G.NAMEQUEST = "DesertQuest"
+    _G.QUESTNUM = 1
+    _G.QUESTTEXT = "Reward:\n$4,000\n35,000 Exp."
+    _G.QUESTMON = CFrame.new(896.408142, 6.43846178, 4389.37891, -0.846945703, -2.31297754e-08, 0.531679392, -1.55507234e-08, 1, 1.87315088e-08, -0.531679392, 7.59657048e-09, -0.846945703)
+    _G.PUK = CFrame.new(949.532593, 15.2893953, 4403.09912, -0.832314849, -4.19622452e-08, 0.55430311, 7.94023236e-10, 1, 7.68949704e-08, -0.55430311, 6.44409539e-08, -0.832314849)
+    elseif MYLEVEL == 75 or MYLEVEL <= 89 then
+     _G.Mon = "Desert Officer [Lv. 70]"
+    _G.NAMEQUEST = "DesertQuest"
+    _G.QUESTNUM = 2
+    _G.QUESTTEXT = "Reward:\n$4,500\n50,000 Exp."
+    _G.QUESTMON = CFrame.new(896.408142, 6.43846178, 4389.37891, -0.846945703, -2.31297754e-08, 0.531679392, -1.55507234e-08, 1, 1.87315088e-08, -0.531679392, 7.59657048e-09, -0.846945703)
+    _G.PUK = CFrame.new(1547.40369, 14.4520388, 4359.40625, 0.228631318, -1.20783e-07, -0.973513126, -3.43095508e-08, 1, -1.32126871e-07, 0.973513126, 6.36091286e-08, 0.228631318)
+    elseif MYLEVEL == 90 or MYLEVEL <= 99 then
+     _G.Mon = "Snow Bandit [Lv. 90]"
+    _G.NAMEQUEST = "SnowQuest"
+    _G.QUESTNUM = 1
+    _G.QUESTTEXT = "Reward:\n$5,000\n70,000 Exp."
+    _G.QUESTMON = CFrame.new(1384.01538, 87.272789, -1296.28137, 0.462413222, -7.79864777e-08, -0.88666451, -1.42050363e-08, 1, -9.53630916e-08, 0.88666451, 5.6692258e-08, 0.462413222)
+    _G.PUK = CFrame.new(1372.84326, 105.990303, -1422.19507, 0.719091773, -2.12436309e-08, 0.694915235, 9.82151036e-08, 1, -7.10619616e-08, -0.694915235, 1.19351228e-07, 0.719091773)
+    elseif MYLEVEL == 100 or MYLEVEL <= 119 then
+     _G.Mon = "Snowman [Lv. 100]"
+    _G.NAMEQUEST = "SnowQuest"
+    _G.QUESTNUM = 2
+    _G.QUESTTEXT = "Reward:\n$5,500\n120,000 Exp."
+    _G.QUESTMON = CFrame.new(1384.01538, 87.272789, -1296.28137, 0.462413222, -7.79864777e-08, -0.88666451, -1.42050363e-08, 1, -9.53630916e-08, 0.88666451, 5.6692258e-08, 0.462413222)
+    _G.PUK = CFrame.new(1220.92712, 138.011871, -1489.01208, 0.389352709, -7.53626693e-07, 0.921088696, 1.45705499e-07, 1, 7.56600116e-07, -0.921088696, -1.60376572e-07, 0.389352709)
+    elseif MYLEVEL == 120 or MYLEVEL <= 149 then
+     _G.Mon = "Chief Petty Officer [Lv. 120]"
+    _G.NAMEQUEST = "MarineQuest2"
+    _G.QUESTNUM = 1
+    _G.QUESTTEXT = "Reward:\n$6,000\n180,000 Exp."
+    _G.QUESTMON = CFrame.new(-5034.64893, 28.6520348, 4324.53369, -0.0616381466, 5.83357576e-08, 0.998098552, -1.59750098e-08, 1, -5.9433436e-08, -0.998098552, -1.96080023e-08, -0.0616381466)
+    _G.PUK = CFrame.new(-4863.61328, 22.6520348, 4306.39307, 0.536051273, 7.00434066e-09, -0.844185412, -5.8011751e-10, 1, 7.92878918e-09, 0.844185412, -3.76051057e-09, 0.536051273)
+    elseif MYLEVEL == 150 or MYLEVEL <= 174 then
+     _G.Mon = "Sky Bandit [Lv. 150]"
+    _G.NAMEQUEST = "SkyQuest"
+    _G.QUESTNUM = 1
+    _G.QUESTTEXT = "Reward:\n$7,000\n250,000 Exp."
+    _G.QUESTMON = CFrame.new(-4843.2041, 717.669617, -2623.13159, -0.775086224, -1.6359829e-08, -0.631855488, -4.10942462e-08, 1, 2.45178793e-08, 0.631855488, 4.49690951e-08, -0.775086224)
+    _G.PUK = CFrame.new(-4970.74219, 294.544342, -2890.11353, -0.994874597, -8.61311165e-08, -0.101116329, -9.10836278e-08, 1, 4.43614923e-08, 0.101116329, 5.33441664e-08, -0.994874597)
+    elseif MYLEVEL == 175 or MYLEVEL <= 224 then
+     _G.Mon = "Dark Master [Lv. 175]"
+    _G.NAMEQUEST = "SkyQuest"
+    _G.QUESTNUM = 2
+    _G.QUESTTEXT = "Reward:\n$7,500\n350,000 Exp."
+    _G.QUESTMON = CFrame.new(-4843.2041, 717.669617, -2623.13159, -0.775086224, -1.6359829e-08, -0.631855488, -4.10942462e-08, 1, 2.45178793e-08, 0.631855488, 4.49690951e-08, -0.775086224)
+    _G.PUK = CFrame.new(-5239.94629, 392.217102, -2208.18335, 0.969297886, -5.95604988e-09, -0.245889395, 3.87897714e-09, 1, -8.93151775e-09, 0.245889395, 7.70350184e-09, 0.969297886)
+    elseif MYLEVEL == 225 or MYLEVEL <= 274 then
+     _G.Mon = "Toga Warrior [Lv. 225]"
+    _G.NAMEQUEST = "ColosseumQuest"
+    _G.QUESTNUM = 1
+    _G.QUESTTEXT = "Reward:\n$7,000\n700,000 Exp."
+    _G.QUESTMON = CFrame.new(-1575.72961, 7.38933659, -2983.39453, 0.52762109, -1.48187587e-06, 0.849479854, 2.69328297e-07, 1, 1.57716818e-06, -0.849479854, -6.0335816e-07, 0.52762109)
+    _G.PUK = CFrame.new(-1819.12415, 7.28907108, -2744.02539, 0.547199547, 2.10840998e-08, -0.837002158, -1.27399286e-10, 1, 2.51067309e-08, 0.837002158, -1.36317579e-08, 0.547199547)
+    elseif MYLEVEL == 275 or MYLEVEL <= 299 then
+     _G.Mon = "Gladiator [Lv. 275]"
+    _G.NAMEQUEST = "ColosseumQuest"
+    _G.QUESTNUM = 2
+    _G.QUESTTEXT = "Reward:\n$7,500\n1,000,000 Exp."
+    _G.QUESTMON = CFrame.new(-1575.72961, 7.38933659, -2983.39453, 0.52762109, -1.48187587e-06, 0.849479854, 2.69328297e-07, 1, 1.57716818e-06, -0.849479854, -6.0335816e-07, 0.52762109)
+    _G.PUK = CFrame.new(-1334.76514, 7.44254398, -3228.90552, -0.340173125, 2.8230156e-08, 0.940362811, 2.60959143e-09, 1, -2.90764834e-08, -0.940362811, -7.4370754e-09, -0.340173125)
+     elseif MYLEVEL == 300 or MYLEVEL <= 329 then
+     _G.Mon = "Military Soldier [Lv. 300]"
+    _G.NAMEQUEST = "MagmaQuest"
+    _G.QUESTNUM = 1
+    _G.QUESTTEXT = "Reward:\n$8,250\n1,300,000 Exp."
+    _G.QUESTMON = CFrame.new(-5316.33887, 12.236989, 8517.67285, 0.499506682, -5.08374072e-08, -0.86631006, -1.30872131e-08, 1, -6.62286652e-08, 0.86631006, 4.44192452e-08, 0.499506682)
+    _G.PUK = CFrame.new(-5419.0752, 10.9255161, 8464.50488, -0.637788415, -4.55103836e-05, 0.770211577, 7.05542743e-06, 1, 6.49305366e-05, -0.770211577, 4.68461185e-05, -0.637788415)
+
+end
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = _G.QUESTMON
+
+
+
+
+
+
+
+--------------------------------------------------------------------------------------------------
+
+function bring()
+    for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+        for k,x in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+            if x.Name == _G.Mon then
+                if v.Name == _G.Mon then
+                    v.HumanoidRootPart.CFrame = x.HumanoidRootPart.CFrame
+                    v.HumanoidRootPart.CanCollide = false
+        end
+    end
+end
+end
+end
+
+
+
+    pcall(function()
+    quest()    
+    bring()
+    tpmonq()
+    attack()
+    abadonquest()
+    end)
+    end
+end)
+
+tgls:Toggle("Hide Hitbox",false, function(VAHB)
+    _G.HIDEHB = VAHB
+end)
+
+tgls:Toggle("Auto Haki",false, function(bool)
+_G.haki = bool
+local args = {
+    [1] = "Buso"
+}
+
+game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
+end)
+
+stats:Toggle("Melee",false, function(value)
+_G.Loop = value
+while _G.Loop do
+    wait()
+local args = {
+    [1] = "AddPoint",
+    [2] = "Melee",
+    [3] = 1
+}
+
+game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
+end
+end)
