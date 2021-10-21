@@ -1,0 +1,4 @@
+local placeId = game.PlaceId
+if placeId == 2753915549 or 4442272183 or 7449423635 then
+  loadstring(game:HttpGet("https://raw.githubusercontent.com/hajibeza/RIPPER-HUB/main/bf%20free"))()
+  end
