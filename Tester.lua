@@ -4351,6 +4351,34 @@ spawn(function()
 		end
 	end)
 
+	spawn(function()
+		while wait(.1) do
+			  if Auto_Bone and Magnet and BoneMagnet then
+				 cq()
+				 pcall(
+					function()
+						  repeat
+							 wait(.1)
+							 for i, v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+								if (v.Name == "Reborn Skeleton [Lv. 1975]" or v.Name == "Living Zombie [Lv. 2000]" or v.Name == "Demonic Soul [Lv. 2025]" or v.Name == "Posessed Mummy [Lv. 2050]") and (v.HumanoidRootPart.Position - MainMonBone.Position).Magnitude <= 300 then
+									  wait()
+									  if HideHitBlox then
+										 v.HumanoidRootPart.Transparency = 1
+									  else
+										 v.HumanoidRootPart.Transparency = 0.75
+									  end
+									  v.HumanoidRootPart.CanCollide = false
+									  v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
+									  v.HumanoidRootPart.CFrame = MainMonBone
+								end
+							 end
+						  until game.Players.LocalPlayer.PlayerGui.Main.Quest.Visible == false or _G.FarmLevel == false and MagnetActive == false
+					end
+				 )
+			  end 
+		end
+	 end)
+
 
 	spawn(function()
 		while game:GetService("RunService").RenderStepped:wait() do
@@ -5485,9 +5513,10 @@ page5:Toggle("Magnet",_G.Mag,function(value)
     Magnet = value
 end)
 
+
 spawn(function()
 	while wait(.1) do
-		  if Magnet and _G.FarmLevel and MagnetActive == true then
+		  if _G.FarmLevel and Magnet and MagnetActive then
 			 cq()
 			 pcall(
 				function()
