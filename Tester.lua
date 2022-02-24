@@ -3989,7 +3989,7 @@ function autofarm()
 												EquipWeapon(_G.SelectWeapon)
 												v.HumanoidRootPart.CanCollide = false
 												v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
-                                                totarget(v.HumanoidRootPart.CFrame * Method)
+                                                totarget(v.HumanoidRootPart.CFrame * CFrame.new(0,30,0))
 												game:GetService("VirtualUser"):CaptureController()
 												game:GetService("VirtualUser"):Button1Down(Vector2.new(1280, 670),workspace.CurrentCamera.CFrame)
 												MagnetActive = true
@@ -4020,18 +4020,7 @@ function autofarm()
 		end
 	end
 
-	Method = CFrame.new(0,35,0)
-	spawn(function()
-	   while wait(3) do
-		   if Methodnow == 1 then
-			Methodnow = 2
-			Method = CFrame.new(0,35,0)
-			else
-			Methodnow = 1
-			Method = CFrame.new(0,0,35)
-		   end
-		end
-	end)
+
 
 spawn(function()
     while game:GetService("RunService").RenderStepped:wait() do
