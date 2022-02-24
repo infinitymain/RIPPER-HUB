@@ -5480,40 +5480,43 @@ spawn(function()
 			end
 		end)
 
-_G.Mag = false
+_G.Mag = true
 page5:Toggle("Magnet",_G.Mag,function(value)
     Magnet = value
 end)
 
- spawn(function()
-	game:GetService("RunService").Heartbeat:connect(function()
-		if _G.FarmLevel and MagnetActive and Magnet then
-			cq()
-			for i,v in pairs(game.Workspace.Enemies:GetChildren()) do
-				if v.Name == Ms and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
-					if v.Name == "Factory Staff [Lv. 800]" or v.Name == "Dragon Crew Warrior [Lv. 1575]" or v.Name == "Dragon Crew Archer [Lv. 1600]" and (v.HumanoidRootPart.Position-game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).magnitude <= 200 then
-						if HideHitBlox then
-							v.HumanoidRootPart.Transparency = 1
-						else
-							v.HumanoidRootPart.Transparency = 70
-						end
-						v.HumanoidRootPart.CanCollide = false
-						v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
-						v.HumanoidRootPart.CFrame = PosMon
-					elseif v.Name == Ms and (v.HumanoidRootPart.Position-game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).magnitude <= 400 then
-						if HideHitBlox then
-							v.HumanoidRootPart.Transparency = 1
-						else
-							v.HumanoidRootPart.Transparency = 70
-						end
-						v.HumanoidRootPart.CanCollide = false
-						v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
-						v.HumanoidRootPart.CFrame = PosMon
-					end
+spawn(function()
+	while wait(.1) do
+		  if _G.FarmLevel and MagnetActive and Magnet  then
+			 cq()
+			 pcall(
+				function()
+					  repeat
+						 wait(.1)
+						 for i, v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+							if v.Name == Ms then
+								  wait()
+								  if HideHitBlox then
+									 v.HumanoidRootPart.Transparency = 1
+								  else
+									 v.HumanoidRootPart.Transparency = 0.75
+								  end
+								  v.HumanoidRootPart.CanCollide = false
+								  v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
+								  v.HumanoidRootPart.CFrame = PosMon
+							end
+						 end
+					  until game.Players.LocalPlayer.PlayerGui.Main.Quest.Visible == false or _G.FarmLevel == false and MagnetActive == false
 				end
-			end
-		end 
-	end)
+			 )
+		  end 
+	end
+ end)
+
+
+ _G.HideHitBlox = true
+page5:Toggle("Hide Hitbox",_G.HideHitBlox,function(vu)
+    HideHitBlox = vu
 end)
 
 _G.Fastatk = true
