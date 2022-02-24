@@ -3938,7 +3938,17 @@ end
 
 _G.FarmLevel = false
 page1:Toggle("Auto Farm",_G.FarmLevel,function(vu)
-    _G.FarmLevel = vu
+    _G.farm = vu
+	if _G.farm and _G.SelectWeapon == "" then
+		game.StarterGui:SetCore("SendNotification", {
+			Title = "RIPPER HUB", 
+			Text = "Select Weapon First" ,
+			Icon = "http://www.roblox.com/asset/?id=4805639000",
+			Duration = 2.5
+		})
+	else	
+	_G.FarmLevel = vu
+	end
 end)
 
 spawn(function()
@@ -3976,9 +3986,10 @@ function autofarm()
 									repeat game:GetService("RunService").Heartbeat:wait()
 										if game:GetService("Workspace").Enemies:FindFirstChild(Ms) then
 											if string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, NameMon) then
+												EquipWeapon(_G.SelectWeapon)
 												v.HumanoidRootPart.CanCollide = false
 												v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
-                                                totarget(v.HumanoidRootPart.CFrame * CFrame.new(0,_G.Distance,0))
+                                                totarget(v.HumanoidRootPart.CFrame * Method)
 												game:GetService("VirtualUser"):CaptureController()
 												game:GetService("VirtualUser"):Button1Down(Vector2.new(1280, 670),workspace.CurrentCamera.CFrame)
 												MagnetActive = true
@@ -4009,9 +4020,18 @@ function autofarm()
 		end
 	end
 
-	
-
-
+	Method = CFrame.new(0,35,0)
+	spawn(function()
+	   while wait(3) do
+		   if Methodnow == 1 then
+			Methodnow = 2
+			Method = CFrame.new(0,35,0)
+			else
+			Methodnow = 1
+			Method = CFrame.new(0,0,35)
+		   end
+		end
+	end)
 
 spawn(function()
     while game:GetService("RunService").RenderStepped:wait() do
@@ -4026,18 +4046,6 @@ spawn(function()
         end
     end
 end)
-
-spawn(function()
-    while game:GetService("RunService").RenderStepped:wait() do
-        if _G.FarmLevel then
-            pcall(function()
-                EquipWeapon(_G.SelectWeapon)
-            end)
-        end
-    end
-end)
-
-
 
 
 function equipfruit()
@@ -4331,6 +4339,7 @@ spawn(function()
 							if v.Name == "Reborn Skeleton [Lv. 1975]" or v.Name == "Living Zombie [Lv. 2000]" or v.Name == "Demonic Soul [Lv. 2025]" or v.Name == "Posessed Mummy [Lv. 2050]" then
 								if v:WaitForChild("Humanoid").Health > 0 then
 									repeat game:GetService("RunService").Heartbeat:wait()
+										EquipWeapon(_G.SelectWeapon)
 										TP(v.HumanoidRootPart.CFrame * CFrame.new(0,30,0))
 										v.HumanoidRootPart.CanCollide = false
 										v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
@@ -4353,14 +4362,35 @@ spawn(function()
 
 
 	spawn(function()
-		while game:GetService("RunService").RenderStepped:wait() do
-			if Auto_Bone then
-				pcall(function()
-					EquipWeapon(_G.SelectWeapon)
-				end)
-			end
+		while wait(.1) do
+			  if Auto_Bone and BoneMagnet and Magnet then
+				 cq()
+				 pcall(
+					function()
+						  repeat
+							 wait(.1)
+							 for i, v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+								if (v.Name == "Reborn Skeleton [Lv. 1975]" or v.Name == "Living Zombie [Lv. 2000]" or v.Name == "Demonic Soul [Lv. 2025]" or v.Name == "Posessed Mummy [Lv. 2050]") and (v.HumanoidRootPart.Position - MainMonBone.Position).Magnitude <= 300 then
+									  wait()
+									  if HideHitBlox then
+										 v.HumanoidRootPart.Transparency = 1
+									  else
+										 v.HumanoidRootPart.Transparency = 0.75
+									  end
+									  v.HumanoidRootPart.CanCollide = false
+									  v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
+									  v.HumanoidRootPart.CFrame = MainMonBone
+								end
+							 end
+						  until game.Players.LocalPlayer.PlayerGui.Main.Quest.Visible == false or Auto_Bone == false or BoneMagnet == false
+					end
+				 )
+			  end 
 		end
-	end)
+	 end)
+
+
+
 
 	page1:Toggle("Auto Bartilo Quest",false,function(vu)
 		AutoBartilo = vu
@@ -4686,10 +4716,7 @@ spawn(function()
 			end
 		end
 	end)
-_G.Distance = 30
-page1:Slider("Distance Farm", 0, 100, 30, function(vu)
-	_G.Distance = vu
-end)
+
 
 
 
@@ -4704,7 +4731,7 @@ Wapon = {}
          table.insert(Wapon, v.Name)
      end
  end
-
+ _G.SelectWeapon = ""
  local SelectWeapona = page1:Dropdown("Select Weapon",Wapon, function(Value)
     _G.SelectWeapon = Value
     _G.SelectToolWeaponOld = Value
@@ -5495,6 +5522,7 @@ spawn(function()
 						 wait(.1)
 						 for i, v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
 							if v.Name == Ms then
+								if (v.HumanoidRootPart.Position - PosMon.Position).Magnitude <= 400 then
 								  wait()
 								  if HideHitBlox then
 									 v.HumanoidRootPart.Transparency = 1
@@ -5504,6 +5532,8 @@ spawn(function()
 								  v.HumanoidRootPart.CanCollide = false
 								  v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
 								  v.HumanoidRootPart.CFrame = PosMon
+								  sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
+								end
 							end
 						 end
 					  until game.Players.LocalPlayer.PlayerGui.Main.Quest.Visible == false or _G.FarmLevel == false or MagnetActive == false
@@ -5512,6 +5542,156 @@ spawn(function()
 		  end 
 	end
  end)
+
+ 
+ spawn(function()
+	while wait() do
+		pcall(function()
+			checklevel()
+			for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+				if _G.FARM and MagnetActive and Magnet then
+					if v.Name == _G.Mon and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
+						if v.Name == "Factory Staff [Lv. 800]" then
+							if (v.HumanoidRootPart.Position - PosMon.Position).Magnitude <= 250 then
+								v.Head.CanCollide = false
+								v.HumanoidRootPart.CanCollide = false
+								v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
+								v.HumanoidRootPart.CFrame = PosMon
+								sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
+							end
+						elseif v.Name == _G.Mon then
+							if (v.HumanoidRootPart.Position - PosMon.Position).Magnitude <= 400  then
+								v.Head.CanCollide = false
+								v.HumanoidRootPart.CanCollide = false
+								v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
+								v.HumanoidRootPart.CFrame = PosMon
+								sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
+							end
+						end
+					end
+				elseif _G.FARMWARP and MagnetActive and Magnet then
+					if v.Name == _G.Mon then
+						if (v.HumanoidRootPart.Position - PosMon.Position).Magnitude <= 400 then
+							v.Head.CanCollide = false
+							v.HumanoidRootPart.CanCollide = false
+							v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
+							v.HumanoidRootPart.CFrame = PosMon
+							sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
+						end
+					elseif _G.Mastery and MasteryBFMagnetActive and MasteryMagnet then
+						if v.Name == "Monkey [Lv. 14]" then
+							if (v.HumanoidRootPart.Position - PosMonMasteryFruit.Position).Magnitude <= 250 then
+								v.Head.CanCollide = false
+								v.HumanoidRootPart.CanCollide = false
+								v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
+								v.HumanoidRootPart.CFrame = PosMonMasteryFruit
+								sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
+							end
+						end
+					elseif v.Name == "Factory Staff [Lv. 800]" then
+						if (v.HumanoidRootPart.Position - PosMonMasteryFruit.Position).Magnitude <= 250 then
+							v.Head.CanCollide = false
+							v.HumanoidRootPart.CanCollide = false
+							v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
+							v.HumanoidRootPart.CFrame = PosMonMasteryFruit
+							sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
+						end
+					elseif v.Name == _G.Mon then
+						if (v.HumanoidRootPart.Position - PosMonMasteryFruit.Position).Magnitude <= 400 then
+							v.Head.CanCollide = false
+							v.HumanoidRootPart.CanCollide = false
+							v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
+							v.HumanoidRootPart.CFrame = PosMonMasteryFruit
+							sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
+						end
+					end
+				elseif _G.MasteryGun and MasteryGunMagnetActive and MasteryMagnet then
+					if v.Name == "Monkey [Lv. 14]" then
+						if (v.HumanoidRootPart.Position - PosMonMasteryGun.Position).Magnitude <= 250 then
+							v.Head.CanCollide = false
+							v.HumanoidRootPart.CanCollide = false
+							v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
+							v.HumanoidRootPart.CFrame = PosMonMasteryGun
+							sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
+						end
+					elseif v.Name == "Factory Staff [Lv. 800]" then
+						if (v.HumanoidRootPart.Position - PosMonMasteryGun.Position).Magnitude <= 250 then
+							v.Head.CanCollide = false
+							v.HumanoidRootPart.CanCollide = false
+							v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
+							v.HumanoidRootPart.CFrame = PosMonMasteryGun
+							sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
+						end
+					elseif v.Name == _G.Mon then
+						if (v.HumanoidRootPart.Position - PosMonMasteryGun.Position).Magnitude <= 400 then
+							v.Head.CanCollide = false
+							v.HumanoidRootPart.CanCollide = false
+							v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
+							v.HumanoidRootPart.CFrame = PosMonMasteryGun
+							sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
+						end
+					end
+				elseif _G.AutoBartilo and MagnetBatilo and Magnet then
+					if v.Name == "Swan Pirate [Lv. 775]" and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
+						v.Head.CanCollide = false
+						v.HumanoidRootPart.CanCollide = false
+						v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
+						v.HumanoidRootPart.CFrame = PosMonBarto
+						sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
+					end
+				elseif _G.AutoRengoku and RengokuMagnet and Magnet then
+					if (v.Name == "Snow Lurker [Lv. 1375]" or v.Name == "Arctic Warrior [Lv. 1350]") and (v.HumanoidRootPart.Position - PosMonRengoku.Position).Magnitude <= 350 then
+						v.Head.CanCollide = false
+						v.HumanoidRootPart.CanCollide = false
+						v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
+						v.HumanoidRootPart.CFrame = PosMonRengoku
+						sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
+					end
+				elseif Auto_Bon5e and BoneMagnet and Magnet then
+					if (v.Name == "Reborn Skeleton [Lv. 1975]" or v.Name == "Living Zombie [Lv. 2000]" or v.Name == "Demonic Soul [Lv. 2025]" or v.Name == "Posessed Mummy [Lv. 2050]") and (v.HumanoidRootPart.Position - MainMonBone.Position).Magnitude <= 300 then
+						v.Head.CanCollide = false
+						v.HumanoidRootPart.CanCollide = false
+						v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
+						v.HumanoidRootPart.CFrame = MainMonBone
+						sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
+					end
+				elseif AutoEcto and EctoplasMagnet and Magnet then
+					if string.find(v.Name, "Ship") and (v.HumanoidRootPart.Position - PosMonEctoplas.Position).Magnitude <= 300 then
+						v.Head.CanCollide = false
+						v.HumanoidRootPart.CanCollide = false
+						v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
+						v.HumanoidRootPart.CFrame = PosMonEctoplas
+						sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
+					end
+				elseif AutoEvoRace and EvoMagnet and Magnet then
+					if v.Name == "Zombie [Lv. 950]" and (v.HumanoidRootPart.Position - PosMonZombie.Position).Magnitude <= 300 then
+						v.Head.CanCollide = false
+						v.HumanoidRootPart.CanCollide = false
+						v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
+						v.HumanoidRootPart.CFrame = PosMonZombie
+						sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
+					end
+				elseif AutoCitizen and CitizenMagnet and Magnet then
+					if v.Name == "Forest Pirate [Lv. 1825]" and (v.HumanoidRootPart.Position - PosMonCitizen.Position).Magnitude <= 300 then
+						v.Head.CanCollide = false
+						v.HumanoidRootPart.CanCollide = false
+						v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
+						v.HumanoidRootPart.CFrame = PosMonZombie
+						sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
+					end
+				elseif AutoFarmSelectMonster and AutoFarmSelectMonsterMagnet and Magnet then
+					if v.Name == _G.Mon and (v.HumanoidRootPart.Position - PosMonSelectMonster.Position).Magnitude <= 400 then
+						v.Head.CanCollide = false
+						v.HumanoidRootPart.CanCollide = false
+						v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
+						v.HumanoidRootPart.CFrame = PosMonSelectMonster
+						sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
+					end
+				end
+			end
+		end)
+	end
+end)
 
 
  _G.HideHitBlox = true
@@ -5538,7 +5718,6 @@ local Cam = require(game.ReplicatedStorage.Util.CameraShaker)
 		   Rig.activeController.humanoid.AutoRotate = true
            Rig.activeController.attacking = false
            Rig.activeController.timeToNextAttack = -(math.huge^math.huge^math.huge)
-           Rig.activeController.blocking = false
            Rig.activeController.timeToNextBlock = 0
            Rig.activeController.hitboxMagnitude = 100
            Rig.activeController.active = false
@@ -5882,18 +6061,36 @@ if world3 then
 		TP2FF(CFrame.new(-610.309692, 57.8323097, 6436.33594))
 	end)
 	page11:Button("Hydra Island",function()
+		local args = {
+			[1] = "requestEntrance",
+			[2] = Vector3.new(5742.9599609375, 613.9691772460938, -283.685546875)
+		}
+		
+		game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
 		TP2FF(CFrame.new(5229.99561, 603.916565, 345.154022))
 	end)
 	page11:Button("Great Tree",function()
 		TP2FF(CFrame.new(2174.94873, 28.7312393, -6728.83154))
 	end)
 	page11:Button("Castle on the Sea",function()
+		local args = {
+			[1] = "requestEntrance",
+			[2] = Vector3.new(-5099.0244140625, 318.5023193359375, -3169.308349609375)
+		}
+		
+		game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))		
 		TP2FF(CFrame.new(-5477.62842, 313.794739, -2808.4585))
 	end)
 	page11:Button("Floating Turtle",function()
 		TP2FF(CFrame.new(-10919.2998, 331.788452, -8637.57227))
 	end)
 	page11:Button("Mansion",function()
+		local args = {
+			[1] = "requestEntrance",
+			[2] = Vector3.new(-12463.6025390625, 378.3270568847656, -7566.0830078125)
+		}
+		
+		game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))		
 		TP2FF(CFrame.new(-12553.8125, 332.403961, -7621.91748))
 	end)
 	page11:Button("Secret Temple",function()
