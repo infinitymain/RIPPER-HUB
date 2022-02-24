@@ -5487,7 +5487,7 @@ end)
 
 spawn(function()
 	while wait(.1) do
-		  if _G.FarmLevel and MagnetActive and Magnet  then
+		  if _G.FarmLevel and MagnetActive and Magnet then
 			 cq()
 			 pcall(
 				function()
@@ -5506,7 +5506,7 @@ spawn(function()
 								  v.HumanoidRootPart.CFrame = PosMon
 							end
 						 end
-					  until game.Players.LocalPlayer.PlayerGui.Main.Quest.Visible == false or _G.FarmLevel == false and MagnetActive == false
+					  until game.Players.LocalPlayer.PlayerGui.Main.Quest.Visible == false or _G.FarmLevel == false or MagnetActive == false
 				end
 			 )
 		  end 
