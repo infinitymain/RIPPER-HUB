@@ -3983,9 +3983,6 @@ function autofarm()
 												game:GetService("VirtualUser"):Button1Down(Vector2.new(1280, 670),workspace.CurrentCamera.CFrame)
 												MagnetActive = true
 												PosMon = v.HumanoidRootPart.CFrame
-											if Magnet then	
-												sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
-											end
 											else
 												MagnetActive = false    
 												game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
