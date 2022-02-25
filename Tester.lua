@@ -5509,7 +5509,7 @@ spawn(function()
 			end
 		end)
 
-_G.Mag = true
+_G.Mag = false
 page5:Toggle("Magnet",_G.Mag,function(value)
     Magnet = value
 end)
