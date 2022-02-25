@@ -4370,6 +4370,7 @@ spawn(function()
 									  v.HumanoidRootPart.CanCollide = false
 									  v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
 									  v.HumanoidRootPart.CFrame = MainMonBone
+									  sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
 								end
 							 end
 						  until game.Players.LocalPlayer.PlayerGui.Main.Quest.Visible == false or _G.FarmLevel == false and MagnetActive == false
@@ -5508,7 +5509,7 @@ spawn(function()
 			end
 		end)
 
-_G.Mag = false
+_G.Mag = true
 page5:Toggle("Magnet",_G.Mag,function(value)
     Magnet = value
 end)
@@ -5533,6 +5534,7 @@ spawn(function()
 								  v.HumanoidRootPart.CanCollide = false
 								  v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
 								  v.HumanoidRootPart.CFrame = PosMon
+								  sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
 							end
 						 end
 					  until game.Players.LocalPlayer.PlayerGui.Main.Quest.Visible == false or _G.FarmLevel == false and MagnetActive == false
