@@ -4367,7 +4367,6 @@ spawn(function()
 									  v.HumanoidRootPart.CanCollide = false
 									  v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
 									  v.HumanoidRootPart.CFrame = MainMonBone
-									  sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
 								end
 							 end
 						  until game.Players.LocalPlayer.PlayerGui.Main.Quest.Visible == false or _G.FarmLevel == false and MagnetActive == false
@@ -5522,6 +5521,7 @@ spawn(function()
 						 wait(.1)
 						 for i, v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
 							if v.Name == Ms then
+								if (v.HumanoidRootPart.Position - PosMon.Position).Magnitude <= 400  then
 								  wait()
 								  if HideHitBlox then
 									 v.HumanoidRootPart.Transparency = 1
@@ -5531,7 +5531,7 @@ spawn(function()
 								  v.HumanoidRootPart.CanCollide = false
 								  v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
 								  v.HumanoidRootPart.CFrame = PosMon
-								  sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
+								end
 							end
 						 end
 					  until game.Players.LocalPlayer.PlayerGui.Main.Quest.Visible == false or _G.FarmLevel == false and MagnetActive == false
@@ -5540,6 +5540,11 @@ spawn(function()
 		  end 
 	end
  end)
+
+ _G.HideHitBlox = false
+page5:Toggle("Hide Hitbox",_G.HideHitBlox,function(value)
+    HideHitBlox = value
+end)
 
 
 _G.Fastatk = true
