@@ -6861,12 +6861,13 @@ Fly = false
 			game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Ectoplasm","Buy",1)
 		end)
 
-		local page5 = MIDNServer:Channel("Setting")
+
+local page5 = MIDNServer:Channel("Setting")
 
 
 page5:Label("Auto Farm Setting")
 
-_G.Haki = true
+
 page5:Toggle("Auto Haki",_G.Haki,function(vu)
     _G.Haki = vu
 end)
@@ -6886,7 +6887,7 @@ spawn(function()
 			end
 		end)
 
-_G.Mag = false
+
 page5:Toggle("Magnet",_G.Mag,function(value)
     Magnet = value
 end)
@@ -6928,7 +6929,6 @@ page5:Toggle("Hide Hitbox",_G.HideHitBlox,function(value)
 end)
 
 
-_G.Fastatk = true
 page5:Toggle("Fast Attack",_G.Fastatk,function(value)
     _G.Fastatk = value
 end)
