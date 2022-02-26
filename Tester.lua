@@ -4787,6 +4787,7 @@ page1:Button("Redeem all code",function()
 	UseCode("STRAWHATMAINE")
 	UseCode("3Bvisits")
 end)
+
 page1:Line()
 
 page1:Label("Mob Aura")
@@ -5577,50 +5578,6 @@ local Cam = require(game.ReplicatedStorage.Util.CameraShaker)
    end)
 
 
-   spawn(function()
-    game:GetService('RunService').Stepped:Connect(function()
-        if _G.Fastatk then
-            for i, v in pairs(game.Workspace["_WorldOrigin"]:GetChildren()) do
-                if v.Name == "CurvedRing" or v.Name == "SwordSlash" or v.Name == "Sounds"  then--or v.Name == "SlashHit"
-                    v:Destroy() 
-                end
-            end
-        end
-    end)
-end)
-
-page5:Toggle("Invisble Mob",_G.IM,function(a)
-    _G.IM = a
-end)
-
-spawn(function()
-	while wait() do
-		if _G.IM then
-			pcall(function()
-				for i,v in pairs(game:GetService("Workspace").Enemies:GetDescendants()) do
-					if v.ClassName == "MeshPart" then
-					v.Transparency = 1
-				end
-				end
-				for i,v in pairs(game:GetService("Workspace").Enemies:GetDescendants()) do
-					if v.Name == "Head" then
-					v.Transparency = 1
-				end
-				end
-					for i,v in pairs(game:GetService("Workspace").Enemies:GetDescendants()) do
-						if v.ClassName == "Accessory" then
-							v.Handle.Transparency = 1
-						end
-					end
-					for i,v in pairs(game:GetService("Workspace").Enemies:GetDescendants()) do
-						if v.ClassName == "Decal" then
-						v.Transparency = 1
-						end
-				end
-			end)
-		end
-	end
-end)
 
 page5:Line()
 
