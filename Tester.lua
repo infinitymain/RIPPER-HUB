@@ -5659,12 +5659,6 @@ end)
 
 
 
-page3:Toggle("Fast Attack",_G.Fastatk,function(value)
-    _G.Fastatk = value
-end)
-
-
-
 page3:Toggle("Invisble Mob",_G.IM,function(a)
     _G.IM = a
 end)
