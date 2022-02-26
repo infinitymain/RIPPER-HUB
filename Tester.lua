@@ -5663,42 +5663,7 @@ page3:Toggle("Fast Attack",_G.Fastatk,function(value)
     _G.Fastatk = value
 end)
 
-local Rig = require(game.Players.LocalPlayer.PlayerScripts.CombatFramework)
-local Cam = require(game.ReplicatedStorage.Util.CameraShaker)
 
-   spawn(function()
-       game:GetService('RunService').Stepped:Connect(function()
-       if _G.Fastatk then
-           Cam:Stop()
-		   game.Players.LocalPlayer.Character.Stun.Value = 0
-		   game.Players.LocalPlayer.Character.Humanoid.Sit = false
-		   game.Players.LocalPlayer.Character.Busy.Value = false
-		   Rig.activeController.increment = 3
-		   Rig.activeController.humanoid.AutoRotate = true
-           Rig.activeController.attacking = false
-           Rig.activeController.timeToNextAttack = -(math.huge^math.huge^math.huge)
-           Rig.activeController.blocking = false
-           Rig.activeController.timeToNextBlock = 0
-           Rig.activeController.hitboxMagnitude = 100
-           Rig.activeController.active = false
-           Rig.activeController.focusStart = 0
-           Rig.activeController.currentAttackTrack = nil
-       end
-       end)
-   end)
-
-
-   spawn(function()
-    game:GetService('RunService').Stepped:Connect(function()
-        if _G.Fastatk then
-            for i, v in pairs(game.Workspace["_WorldOrigin"]:GetChildren()) do
-                if v.Name == "CurvedRing" or v.Name == "SwordSlash" or v.Name == "Sounds"  then--or v.Name == "SlashHit"
-                    v:Destroy() 
-                end
-            end
-        end
-    end)
-end)
 
 page3:Toggle("Invisble Mob",_G.IM,function(a)
     _G.IM = a
