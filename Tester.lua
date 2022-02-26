@@ -5521,7 +5521,7 @@ spawn(function()
 						 wait(.1)
 						 for i, v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
 							if v.Name == Ms then
-								if (v.HumanoidRootPart.Position - PosMon.Position).Magnitude <= 400  then
+								if (v.HumanoidRootPart.Position - PosMon.Position).Magnitude <= 300  then
 								  wait()
 								  if HideHitBlox then
 									 v.HumanoidRootPart.Transparency = 1
@@ -5541,7 +5541,7 @@ spawn(function()
 	end
  end)
 
- _G.HideHitBlox = false
+ _G.HideHitBlox = true
 page5:Toggle("Hide Hitbox",_G.HideHitBlox,function(value)
     HideHitBlox = value
 end)
