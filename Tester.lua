@@ -5553,29 +5553,30 @@ page5:Toggle("Fast Attack",_G.Fastatk,function(value)
     _G.Fastatk = value
 end)
 
-local Rig = require(game.Players.LocalPlayer.PlayerScripts.CombatFramework)
-local Cam = require(game.ReplicatedStorage.Util.CameraShaker)
 
-   spawn(function()
-       game:GetService('RunService').Stepped:Connect(function()
-       if _G.Fastatk then
-           Cam:Stop()
-		   game.Players.LocalPlayer.Character.Stun.Value = 0
-		   game.Players.LocalPlayer.Character.Humanoid.Sit = false
-		   game.Players.LocalPlayer.Character.Busy.Value = false
-		   Rig.activeController.increment = 3
-		   Rig.activeController.humanoid.AutoRotate = true
-           Rig.activeController.attacking = false
-           Rig.activeController.timeToNextAttack = -(math.huge^math.huge^math.huge)
-           Rig.activeController.blocking = false
-           Rig.activeController.timeToNextBlock = 0
-           Rig.activeController.hitboxMagnitude = 100
-           Rig.activeController.active = false
-           Rig.activeController.focusStart = 0
-           Rig.activeController.currentAttackTrack = nil
-       end
-       end)
-   end)
+
+local RigC = require(game:GetService("Players").LocalPlayer.PlayerScripts.CombatFramework) 
+local VirtualUser = game:GetService('VirtualUser')
+local kkii = require(game.ReplicatedStorage.Util.CameraShaker)
+spawn(function()
+	game:GetService('RunService').Heartbeat:connect(function()
+		if _G.Fastatk then
+			pcall(function()
+				RigC.activeController.timeToNextAttack = 0
+				RigC.activeController.attacking = false
+				RigC.activeController.blocking = false
+				RigC.activeController.timeToNextAttack = 0
+				RigC.activeController.timeToNextBlock = 0
+				RigC.activeController.increment = 3
+				RigC.activeController.hitboxMagnitude = 100
+				game.Players.LocalPlayer.Character.Stun.Value = 0
+				game.Players.LocalPlayer.Character.Humanoid.Sit = false
+				kkii:Stop()
+			end)
+		end
+	end)
+end)
+
 
 
 
