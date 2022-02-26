@@ -5481,132 +5481,13 @@ end)
 
 
 
-local page5 = MIDNServer:Channel("Setting")
 
-
-page5:Label("Auto Farm Setting")
-
-_G.Haki = true
-page5:Toggle("Auto Haki",_G.Haki,function(vu)
-    _G.Haki = vu
-end)
-
-spawn(function()
-	while wait() do
-		if _G.Haki then
-			if game.Players.LocalPlayer.Character:FindFirstChild("HasBuso") then
-				--nothing
-				else
-				local args = {
-				[1] = "Buso"
-				}
-				game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
-				end
-			end
-			end
-		end)
-
-_G.Mag = false
-page5:Toggle("Magnet",_G.Mag,function(value)
-    Magnet = value
-end)
-
-
-spawn(function()
-	while wait(.1) do
-		  if _G.FarmLevel and Magnet and MagnetActive then
-			 cq()
-			 pcall(
-				function()
-					  repeat
-						 wait(.1)
-						 for i, v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
-							if v.Name == Ms then
-								if (v.HumanoidRootPart.Position - PosMon.Position).Magnitude <= 300  then
-								  wait()
-								  if HideHitBlox then
-									 v.HumanoidRootPart.Transparency = 1
-								  else
-									 v.HumanoidRootPart.Transparency = 0.75
-								  end
-								  v.HumanoidRootPart.CanCollide = false
-								  v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
-								  v.HumanoidRootPart.CFrame = PosMon
-								end
-							end
-						 end
-					  until game.Players.LocalPlayer.PlayerGui.Main.Quest.Visible == false or _G.FarmLevel == false and MagnetActive == false
-				end
-			 )
-		  end 
-	end
- end)
-
- _G.HideHitBlox = true
-page5:Toggle("Hide Hitbox",_G.HideHitBlox,function(value)
-    HideHitBlox = value
-end)
-
-
-_G.Fastatk = true
-page5:Toggle("Fast Attack",_G.Fastatk,function(value)
-    _G.Fastatk = value
-end)
-
-
-
-local RigC = require(game:GetService("Players").LocalPlayer.PlayerScripts.CombatFramework) 
-local VirtualUser = game:GetService('VirtualUser')
-local kkii = require(game.ReplicatedStorage.Util.CameraShaker)
-spawn(function()
-	game:GetService('RunService').Heartbeat:connect(function()
-		if _G.Fastatk then
-			pcall(function()
-				RigC.activeController.timeToNextAttack = 0
-				RigC.activeController.attacking = false
-				RigC.activeController.blocking = false
-				RigC.activeController.timeToNextAttack = 0
-				RigC.activeController.timeToNextBlock = 0
-				RigC.activeController.increment = 3
-				RigC.activeController.hitboxMagnitude = 100
-				game.Players.LocalPlayer.Character.Stun.Value = 0
-				game.Players.LocalPlayer.Character.Humanoid.Sit = false
-				kkii:Stop()
-			end)
-		end
-	end)
-end)
-
-
-
-
-page5:Line()
-
-
-page5:Label("Farm Mastery Setting")
-
-
-
-SkillZ = true
-page5:Toggle("Skill Z",SkillZ,function(a)
-    SkillZ = a
-end)
-SkillX = true
-page5:Toggle("Skill X",SkillX,function(a)
-    SkillX = a
-end)
-SkillC = true
-page5:Toggle("Skill C",SkillC,function(a)
-    SkillC = a
-end)
-SkillV = true
-page5:Toggle("Skill V",SkillV,function(a)
-    SkillV = a
-end)
 
 
 
 local page2 = MIDNServer:Channel("Stats")
+
+
 
 page2:Toggle("Melee",false,function(vu)
     _G.Melee = vu
