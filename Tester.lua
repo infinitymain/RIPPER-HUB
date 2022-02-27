@@ -3888,7 +3888,7 @@ end
 
 spawn(function()
     game:GetService("RunService").Heartbeat:Connect(function()
-        if _G.FarmLevel  or NextIsland or _G.EliteHunt or _G.Mastery or _G.MobAura or AutoFarmBoss or Auto_Bone or AutoBartilo or _G.Buddy or AutoRainbow or _G.MasteryGun then
+        if _G.FarmLevel or AutoEcto or NextIsland or _G.EliteHunt or _G.Mastery or _G.MobAura or AutoFarmBoss or Auto_Bone or AutoBartilo or _G.Buddy or AutoRainbow or _G.MasteryGun then
             if not game:GetService("Workspace"):FindFirstChild("LOL") then
                 local LOL = Instance.new("Part")
                 LOL.Name = "LOL"
@@ -3913,7 +3913,7 @@ spawn(function()
     player = game.Players.LocalPlayer
     character = player.Character
     game:GetService("RunService").Stepped:Connect(function()
-        if _G.FarmLevel  or NextIsland or _G.EliteHunt or _G.Mastery or _G.MobAura or AutoFarmBoss or Auto_Bone or AutoBartilo or _G.Buddy or AutoRainbow or _G.MasteryGun then
+        if _G.FarmLevel or AutoEcto or NextIsland or _G.EliteHunt or _G.Mastery or _G.MobAura or AutoFarmBoss or Auto_Bone or AutoBartilo or _G.Buddy or AutoRainbow or _G.MasteryGun then
             pcall(function()
 			for _, v in pairs(character:GetDescendants()) do
                 if v:IsA("BasePart") then
@@ -3978,7 +3978,7 @@ function autofarm()
 											if string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, NameMon) then
 												v.HumanoidRootPart.CanCollide = false
 												v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
-                                                totarget(v.HumanoidRootPart.CFrame * CFrame.new(0,_G.Distance,0))
+                                                totarget(v.HumanoidRootPart.CFrame * CFrame.new(0,20,0))
 												game:GetService("VirtualUser"):CaptureController()
 												game:GetService("VirtualUser"):Button1Down(Vector2.new(1280, 670),workspace.CurrentCamera.CFrame)
 												MagnetActive = true
@@ -4621,6 +4621,84 @@ spawn(function()
 		end)
 	end)
 
+	page1:Toggle("Auto Ectoplasm",false,function(vu)
+		AutoEcto = vu
+		if vu == false then
+			wait(1)
+			TP(game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame)
+		end
+	end)
+
+	spawn(function()
+		pcall(function()
+			while wait(.1) do
+				if AutoEcto then
+					if game:GetService("Workspace").Enemies:FindFirstChild("Ship Deckhand [Lv. 1250]") or game:GetService("Workspace").Enemies:FindFirstChild("Ship Engineer [Lv. 1275]") or game:GetService("Workspace").Enemies:FindFirstChild("Ship Steward [Lv. 1300]") or game:GetService("Workspace").Enemies:FindFirstChild("Ship Officer [Lv. 1325]") then
+						for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+							if string.find(v.Name, "Ship") then
+								repeat game:GetService("RunService").Heartbeat:wait()
+									EquipWeapon(_G.SelectWeapon)
+									if string.find(v.Name, "Ship") then
+										TP(v.HumanoidRootPart.CFrame * CFrame.new(0,20,0))
+										game:GetService'VirtualUser':CaptureController()
+										game:GetService'VirtualUser':Button1Down(Vector2.new(1280, 672))
+										require(game:GetService("Players").LocalPlayer.PlayerScripts.CombatFramework).activeController.hitboxMagnitude = 1000
+										PosMonEctoplas = v.HumanoidRootPart.CFrame
+										EctoplasMagnet = true
+									else
+										EctoplasMagnet = false
+										TP(CFrame.new(904.4072265625, 181.05767822266, 33341.38671875))
+									end
+								until AutoEcto == false or not v.Parent or v.Humanoid.Health <= 0
+							end
+						end
+					else
+						EctoplasMagnet = false
+						local Distance = (Vector3.new(904.4072265625, 181.05767822266, 33341.38671875) - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
+						if Distance > 20000 then
+							game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(923.21252441406, 126.9760055542, 32852.83203125))
+						end
+						TP(CFrame.new(904.4072265625, 181.05767822266, 33341.38671875))
+					end
+				end
+			end
+		end)
+	end)
+
+	spawn(function()
+		while wait(.1) do
+			  if AutoEcto and Magnet and EctoplasMagnet then
+				 cq()
+				 pcall(
+					function()
+						  repeat
+							 wait(.1)
+							 for i, v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+								if string.find(v.Name, "Ship") and (v.HumanoidRootPart.Position - PosMonEctoplas.Position).Magnitude <= 300 then
+									  wait()
+									  if HideHitBlox then
+										 v.HumanoidRootPart.Transparency = 1
+									  else
+										 v.HumanoidRootPart.Transparency = 0.75
+									  end
+									  v.Head.CanCollide = false
+									  v.HumanoidRootPart.CanCollide = false
+									  v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
+									  v.HumanoidRootPart.CFrame = PosMonEctoplas
+									  if Magnet then
+										if setsimulationradius then 
+											sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
+										end
+									end
+									end
+								end
+						  until game.Players.LocalPlayer.PlayerGui.Main.Quest.Visible == false or AutoEcto == false and EctoplasMagnet == false
+					end
+				 )
+			  end 
+		end
+	 end)
+
 	page1:Toggle("Auto Buy Legendary Sword",false,function(vu)
 		_G.LegebdarySword = vu
 	end)
@@ -4711,11 +4789,6 @@ spawn(function()
 			end
 		end
 	end)
-_G.Distance = 30
-page1:Slider("Distance Farm", 0, 100, 30, function(vu)
-	_G.Distance = vu
-end)
-
 
 
 Wapon = {}
@@ -5616,6 +5689,35 @@ spawn(function()
 			end
 		end)
 
+page3:Toggle("Fast Attack",_G.Fastatk,function(vu)
+	_G.Fastatk = vu
+end)
+
+		spawn(function()
+			while game:GetService("RunService").RenderStepped:wait() do
+				if _G.Fastatk then
+					pcall(function()
+						require(game:GetService("Players").LocalPlayer.PlayerScripts.CombatFramework.CameraShaker).CameraShakeInstance.CameraShakeState = {FadingIn = 3,FadingOut = 2,Sustained = 0,Inactive =1}
+						require(game:GetService("Players").LocalPlayer.PlayerScripts.CombatFramework).activeController.hitboxMagnitude = 60
+						require(game:GetService("Players").LocalPlayer.PlayerScripts.CombatFramework).activeController.timeToNextAttack = 1632835374.042
+						require(game:GetService("Players").LocalPlayer.PlayerScripts.CombatFramework).activeController.timeToNextAttack = 1633884380.648
+						require(game:GetService("Players").LocalPlayer.PlayerScripts.CombatFramework).activeController.timeToNextAttack = 1633884687.8659
+						require(game:GetService("Players").LocalPlayer.PlayerScripts.CombatFramework).activeController.timeToNextAttack = 1633884376.3219
+						require(game:GetService("Players").LocalPlayer.PlayerScripts.CombatFramework).activeController.timeToNextAttack = 1633884959.1744
+						require(game:GetService("Players").LocalPlayer.PlayerScripts.CombatFramework).activeController.timeToNextAttack = 1633884965.2946
+						require(game:GetService("Players").LocalPlayer.PlayerScripts.CombatFramework).activeController.attacking = false
+						require(game:GetService("Players").LocalPlayer.PlayerScripts.CombatFramework).activeController.timeToNextAttack = 0
+						require(game:GetService("Players").LocalPlayer.PlayerScripts.CombatFramework).activeController.blocking = false
+						require(game:GetService("Players").LocalPlayer.PlayerScripts.CombatFramework).activeController.timeToNextBlock = 0
+						require(game:GetService("Players").LocalPlayer.PlayerScripts.CombatFramework).activeController.active = false
+						require(game:GetService("Players").LocalPlayer.PlayerScripts.CombatFramework).activeController.focusStart = 0
+						require(game:GetService("Players").LocalPlayer.PlayerScripts.CombatFramework).activeController.currentAttackTrack = nil
+						require(game:GetService("Players").LocalPlayer.PlayerScripts.CombatFramework).activeController.increment = 3
+					end)
+				end
+			end
+		end)	
+
 
 page3:Toggle("Magnet",_G.Mag,function(value)
     Magnet = value
@@ -5642,6 +5744,11 @@ spawn(function()
 								  v.HumanoidRootPart.CanCollide = false
 								  v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
 								  v.HumanoidRootPart.CFrame = PosMon
+								  if Magnet then
+									if setsimulationradius then 
+										sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
+									end
+								end
 								end
 							end
 						 end
@@ -5715,6 +5822,154 @@ page3:Toggle("Skill V",SkillV,function(a)
     SkillV = a
 end)
 
+spawn(function()
+	while wait() do
+		pcall(function()
+			checklevel()
+			for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+				if _G.FARM and MagnetActive and Magnet then
+					if v.Name == _G.Mon and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
+						if v.Name == "Factory Staff [Lv. 800]" then
+							if (v.HumanoidRootPart.Position - PosMon.Position).Magnitude <= 250 then
+								v.Head.CanCollide = false
+								v.HumanoidRootPart.CanCollide = false
+								v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
+								v.HumanoidRootPart.CFrame = PosMon
+								sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
+							end
+						elseif v.Name == _G.Mon then
+							if (v.HumanoidRootPart.Position - PosMon.Position).Magnitude <= 400  then
+								v.Head.CanCollide = false
+								v.HumanoidRootPart.CanCollide = false
+								v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
+								v.HumanoidRootPart.CFrame = PosMon
+								sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
+							end
+						end
+					end
+				elseif _G.FARMWARP and MagnetActive and Magnet then
+					if v.Name == _G.Mon then
+						if (v.HumanoidRootPart.Position - PosMon.Position).Magnitude <= 400 then
+							v.Head.CanCollide = false
+							v.HumanoidRootPart.CanCollide = false
+							v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
+							v.HumanoidRootPart.CFrame = PosMon
+							sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
+						end
+					elseif _G.Mastery and MasteryBFMagnetActive and MasteryMagnet then
+						if v.Name == "Monkey [Lv. 14]" then
+							if (v.HumanoidRootPart.Position - PosMonMasteryFruit.Position).Magnitude <= 250 then
+								v.Head.CanCollide = false
+								v.HumanoidRootPart.CanCollide = false
+								v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
+								v.HumanoidRootPart.CFrame = PosMonMasteryFruit
+								sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
+							end
+						end
+					elseif v.Name == "Factory Staff [Lv. 800]" then
+						if (v.HumanoidRootPart.Position - PosMonMasteryFruit.Position).Magnitude <= 250 then
+							v.Head.CanCollide = false
+							v.HumanoidRootPart.CanCollide = false
+							v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
+							v.HumanoidRootPart.CFrame = PosMonMasteryFruit
+							sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
+						end
+					elseif v.Name == _G.Mon then
+						if (v.HumanoidRootPart.Position - PosMonMasteryFruit.Position).Magnitude <= 400 then
+							v.Head.CanCollide = false
+							v.HumanoidRootPart.CanCollide = false
+							v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
+							v.HumanoidRootPart.CFrame = PosMonMasteryFruit
+							sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
+						end
+					end
+				elseif FarmMasteryGun and MasteryGunMagnetActive and MasteryMagnet then
+					if v.Name == "Monkey [Lv. 14]" then
+						if (v.HumanoidRootPart.Position - PosMonMasteryGun.Position).Magnitude <= 250 then
+							v.Head.CanCollide = false
+							v.HumanoidRootPart.CanCollide = false
+							v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
+							v.HumanoidRootPart.CFrame = PosMonMasteryGun
+							sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
+						end
+					elseif v.Name == "Factory Staff [Lv. 800]" then
+						if (v.HumanoidRootPart.Position - PosMonMasteryGun.Position).Magnitude <= 250 then
+							v.Head.CanCollide = false
+							v.HumanoidRootPart.CanCollide = false
+							v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
+							v.HumanoidRootPart.CFrame = PosMonMasteryGun
+							sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
+						end
+					elseif v.Name == _G.Mon then
+						if (v.HumanoidRootPart.Position - PosMonMasteryGun.Position).Magnitude <= 400 then
+							v.Head.CanCollide = false
+							v.HumanoidRootPart.CanCollide = false
+							v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
+							v.HumanoidRootPart.CFrame = PosMonMasteryGun
+							sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
+						end
+					end
+				elseif _G.AutoBartilo and MagnetBatilo and Magnet then
+					if v.Name == "Swan Pirate [Lv. 775]" and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
+						v.Head.CanCollide = false
+						v.HumanoidRootPart.CanCollide = false
+						v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
+						v.HumanoidRootPart.CFrame = PosMonBarto
+						sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
+					end
+				elseif _G.AutoRengoku and RengokuMagnet and Magnet then
+					if (v.Name == "Snow Lurker [Lv. 1375]" or v.Name == "Arctic Warrior [Lv. 1350]") and (v.HumanoidRootPart.Position - PosMonRengoku.Position).Magnitude <= 350 then
+						v.Head.CanCollide = false
+						v.HumanoidRootPart.CanCollide = false
+						v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
+						v.HumanoidRootPart.CFrame = PosMonRengoku
+						sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
+					end
+				elseif Auto_Bone and BoneMagnet and Magnet then
+					if (v.Name == "Reborn Skeleton [Lv. 1975]" or v.Name == "Living Zombie [Lv. 2000]" or v.Name == "Demonic Soul [Lv. 2025]" or v.Name == "Posessed Mummy [Lv. 2050]") and (v.HumanoidRootPart.Position - MainMonBone.Position).Magnitude <= 300 then
+						v.Head.CanCollide = false
+						v.HumanoidRootPart.CanCollide = false
+						v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
+						v.HumanoidRootPart.CFrame = MainMonBone
+						sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
+					end
+				elseif AutoEcto5 and EctoplasMagnet and Magnet then
+					if string.find(v.Name, "Ship") and (v.HumanoidRootPart.Position - PosMonEctoplas.Position).Magnitude <= 300 then
+						v.Head.CanCollide = false
+						v.HumanoidRootPart.CanCollide = false
+						v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
+						v.HumanoidRootPart.CFrame = PosMonEctoplas
+						sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
+					end
+				elseif AutoEvoRace and EvoMagnet and Magnet then
+					if v.Name == "Zombie [Lv. 950]" and (v.HumanoidRootPart.Position - PosMonZombie.Position).Magnitude <= 300 then
+						v.Head.CanCollide = false
+						v.HumanoidRootPart.CanCollide = false
+						v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
+						v.HumanoidRootPart.CFrame = PosMonZombie
+						sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
+					end
+				elseif AutoCitizen and CitizenMagnet and Magnet then
+					if v.Name == "Forest Pirate [Lv. 1825]" and (v.HumanoidRootPart.Position - PosMonCitizen.Position).Magnitude <= 300 then
+						v.Head.CanCollide = false
+						v.HumanoidRootPart.CanCollide = false
+						v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
+						v.HumanoidRootPart.CFrame = PosMonZombie
+						sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
+					end
+				elseif AutoFarmSelectMonster and AutoFarmSelectMonsterMagnet and Magnet then
+					if v.Name == _G.Mon and (v.HumanoidRootPart.Position - PosMonSelectMonster.Position).Magnitude <= 400 then
+						v.Head.CanCollide = false
+						v.HumanoidRootPart.CanCollide = false
+						v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
+						v.HumanoidRootPart.CFrame = PosMonSelectMonster
+						sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
+					end
+				end
+			end
+		end)
+	end
+end)
 
 
 local page11 = MIDNServer:Channel("Teleport")
